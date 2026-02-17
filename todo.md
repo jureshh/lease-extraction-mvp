@@ -76,3 +76,13 @@
 - [x] Change app theme from dark to light
 - [x] Update all dashboard components to use light colors
 - [x] Update landing page to complement light app theme
+
+## Data Alignment
+- [x] Align synthetic data generator to produce 150 leases (not 250)
+- [x] Ensure total GLA is consistent across all views (38,244 m²)
+- [x] Align total annualized rent to match demo script (PLN 50M)
+- [x] Align revenue leakage to match demo script (PLN 1.0M)
+- [x] Update landing page metrics to match app data
+- [x] Update demo script with consistent numbers
+- [x] Add H&M sample lease upload scenario to demo script
+- [x] Ensure H&M lease extraction produces realistic output

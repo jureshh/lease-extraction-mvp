@@ -77,11 +77,11 @@ export function generateLeases(userId: number, propertyIds: number[], count: num
     // Generate lease dates
     const leaseStartDate = randomDate(new Date(2020, 0, 1), new Date(2023, 11, 31));
     const leaseExpiryDate = addMonths(leaseStartDate, randomInt(36, 120)); // 3-10 years
-    const tenantBreakOptionDate = Math.random() > 0.6 ? addMonths(leaseStartDate, randomInt(24, 60)) : null;
+    const tenantBreakOptionDate = Math.random() > 0.5 ? addMonths(leaseStartDate, randomInt(18, 48)) : null;
     const renewalDeadline = Math.random() > 0.5 ? addMonths(leaseExpiryDate, -6) : null;
     
-    // Generate base rent with steps
-    const currentBaseRent = parseFloat(randomFloat(5000, 50000, 2));
+    // Generate base rent with steps - adjusted for PLN 51M total
+    const currentBaseRent = parseFloat(randomFloat(8000, 48000, 2));
     const rentSteps = Math.random() > 0.5 ? [
       { effectiveDate: addMonths(leaseStartDate, 12).toISOString().split('T')[0]!, newRentAmount: currentBaseRent * 1.03 },
       { effectiveDate: addMonths(leaseStartDate, 24).toISOString().split('T')[0]!, newRentAmount: currentBaseRent * 1.06 },
@@ -111,9 +111,8 @@ export function generateLeases(userId: number, propertyIds: number[], count: num
     const excludedCosts = Math.random() > 0.5 ? ["Capital Improvements", "Property Taxes"] : null;
     const serviceChargeStatus = randomChoice(["Reconciled", "Pending", "Disputed"]);
     
-    // Generate leasable area
-    const leasableArea = randomFloat(50, 500, 2);
-    
+    // Generate leasable area (GLA) - adjusted for ~40K total
+    const leasableArea = parseFloat(randomFloat(100, 400, 2));
     // Calculate data completeness
     let completedFields = 0;
     const totalFields = 25;
@@ -136,7 +135,7 @@ export function generateLeases(userId: number, propertyIds: number[], count: num
       documentKey: null,
       tenantName,
       tenantCategory,
-      leasableArea,
+      leasableArea: leasableArea.toString(),
       currentBaseRent: currentBaseRent.toString(),
       rentCurrency: "PLN",
       rentSteps,

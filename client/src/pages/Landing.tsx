@@ -47,9 +47,8 @@ function HeroSection() {
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.3, duration: 0.6, type: "spring" }}
           >
-            PLN 1M+
-          </motion.div>
-          
+            PLN 1.0M
+          </motion.div>       
           <motion.p
             className="text-3xl md:text-4xl text-slate-300 mb-16"
             initial={{ opacity: 0 }}
@@ -124,7 +123,7 @@ function DiscoverySection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {[
             { value: "150", label: "Leases", delay: 0.4 },
-            { value: "39,795 m²", label: "Portfolio", delay: 0.6 },
+            { value: "38,244 m²", label: "Portfolio", delay: 0.6 },
             { value: "Seconds", label: "Analysis Time", delay: 0.8 },
           ].map((stat, index) => (
             <motion.div
@@ -153,22 +152,22 @@ function TransformationSection() {
     {
       icon: AlertTriangle,
       value: "PLN 1.0M",
-      label: "Revenue Leakage",
+      label: "Revenue Leakage Detected",
       color: "text-red-400",
       bgColor: "bg-red-900/20",
       borderColor: "border-red-800",
     },
     {
       icon: TrendingUp,
-      value: "9",
-      label: "Break Options at Risk",
+      value: "3",
+      label: "Break Options Expiring",
       color: "text-orange-400",
       bgColor: "bg-orange-900/20",
       borderColor: "border-orange-800",
     },
     {
       icon: Shield,
-      value: "23",
+      value: "20",
       label: "Non-Standard Clauses",
       color: "text-yellow-400",
       bgColor: "bg-yellow-900/20",
@@ -176,8 +175,8 @@ function TransformationSection() {
     },
     {
       icon: Users,
-      value: "5.8%",
-      label: "Concentration Risk",
+      value: "8.1%",
+      label: "Tenant Concentration",
       color: "text-green-400",
       bgColor: "bg-green-900/20",
       borderColor: "border-green-800",

@@ -114,7 +114,7 @@ export const appRouter = router({
         }
 
         // Generate leases
-        const leasesData = generateLeases(ctx.user.id, propertyIds, 50);
+        const leasesData = generateLeases(ctx.user.id, propertyIds, 150);
 
         for (const lease of leasesData) {
           await createLease(lease);

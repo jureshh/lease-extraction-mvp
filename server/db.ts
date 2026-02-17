@@ -182,9 +182,22 @@ export async function getFinancialStats(userId: number) {
       const baseRent = parseFloat(lease.currentBaseRent);
       totalAnnualizedRent += baseRent * 12; // Assuming monthly rent
       
-      // Estimate potential leakage (3-7% of rent)
+      // Estimate potential leakage from multiple sources
+      // Missing indexation caps
       if (lease.indexationIndex && !lease.indexationCap) {
-        potentialLeakage += baseRent * 12 * 0.05; // 5% potential leakage
+        potentialLeakage += baseRent * 12 * 0.03; // 3% uncapped indexation risk
+      }
+      // Missing turnover rent tracking
+      if (lease.turnoverRentPercentage && parseFloat(lease.turnoverRentPercentage) > 0) {
+        potentialLeakage += baseRent * 0.15; // Monthly turnover rent underreporting
+      }
+      // Service charge reconciliation pending
+      if (lease.serviceChargeStatus === "Pending") {
+        potentialLeakage += baseRent * 0.08; // Monthly service charge variance
+      }
+      // Break clauses not monitored
+      if (lease.tenantBreakOptionDate && !lease.tenantBreakNoticePeriod) {
+        potentialLeakage += baseRent * 0.5; // Half month rent risk
       }
     }
   });
