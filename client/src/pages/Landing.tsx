@@ -275,7 +275,7 @@ function ImpactSection() {
               className="text-xl px-10 py-7 bg-blue-600 hover:bg-blue-700 text-white"
               asChild
             >
-              <Link href="/dashboard">
+              <Link href="/upload">
                 View Live Demo <ArrowRight className="ml-2" />
               </Link>
             </Button>

@@ -68,3 +68,11 @@
 - [x] Integrate financial metrics as visual elements
 - [x] Ensure text complements voiceover rather than duplicates it
 - [x] Add background images and visual hierarchy
+
+## Navigation and Theme Fixes
+- [x] Fix navigation loop between landing page and app
+- [x] Ensure "View Live Demo" goes to upload screen, not dashboard
+- [x] Ensure "Upload Lease" goes to upload screen
+- [x] Change app theme from dark to light
+- [x] Update all dashboard components to use light colors
+- [x] Update landing page to complement light app theme
