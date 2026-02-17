@@ -51,3 +51,13 @@
 - [x] Test extraction pipeline end-to-end
 - [x] Test all dashboard visualizations
 - [x] Create first checkpoint
+
+## Interactive Landing Page
+- [x] Create narrative-driven landing page based on demo script
+- [x] Build Act 1: The Problem section with pain points
+- [x] Build Act 2: The Discovery section with AI reveal
+- [x] Build Act 3: The Transformation section with live data
+- [x] Build Act 4: The Impact section with CTA
+- [x] Add scroll-triggered animations and transitions
+- [x] Implement interactive data visualizations
+- [x] Add smooth scroll navigation between sections
