@@ -29,16 +29,45 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 
 async function startServer() {
   const app = express();
+
+  // CORS — must be first, before all other middleware
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://leasos.lovable.app",
+    ...(process.env.ALLOWED_ORIGINS?.split(",").map(o => o.trim()) ?? []),
+  ];
+
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin && allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+    if (req.method === "OPTIONS") {
+      res.sendStatus(204);
+      return;
+    }
+    next();
+  });
+
+  // Health check
   app.get("/api/health", (_req, res) => {
-  res.status(200).json({ status: "ok", uptime: Math.floor(process.uptime()) });
-});
+    res.status(200).json({ status: "ok", uptime: Math.floor(process.uptime()) });
+  });
+
   const server = createServer(app);
-  // Configure body parser with larger size limit for file uploads
+
+  // Body parser
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  // OAuth callback under /api/oauth/callback
+
+  // OAuth
   registerOAuthRoutes(app);
-  // tRPC API
+
+  // tRPC
   app.use(
     "/api/trpc",
     createExpressMiddleware({
@@ -46,7 +75,8 @@ async function startServer() {
       createContext,
     })
   );
-  // development mode uses Vite, production mode uses static files
+
+  // Vite (dev) or static (prod)
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {
