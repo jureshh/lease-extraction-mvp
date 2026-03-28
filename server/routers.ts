@@ -101,20 +101,20 @@ export const appRouter = router({
         }
       }),
 
-    seedSyntheticData: protectedProcedure.mutation(async ({ ctx }) => {
-      try {
-        // Generate properties
-        const propertiesData = generateProperties();
-        const propertyIds: number[] = [];
+    seedSyntheticData: publicProcedure.mutation(async () => {
+  try {
+    // Generate properties
+    const propertiesData = generateProperties();
+    const propertyIds: number[] = [];
 
-        for (let i = 0; i < propertiesData.length; i++) {
-          await createProperty(propertiesData[i]!);
-          // Use sequential IDs starting from 1
-          propertyIds.push(i + 1);
-        }
+    for (let i = 0; i < propertiesData.length; i++) {
+      await createProperty(propertiesData[i]!);
+      // Use sequential IDs starting from 1
+      propertyIds.push(i + 1);
+    }
 
-        // Generate leases
-        const leasesData = generateLeases(ctx.user.id, propertyIds, 150);
+    // Generate leases
+    const leasesData = generateLeases(1, propertyIds, 150);
 
         for (const lease of leasesData) {
           await createLease(lease);
