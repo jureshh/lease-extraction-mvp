@@ -29,8 +29,7 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 
 async function startServer() {
   const app = express();
-
-  // CORS — must be first, before all other middleware
+// CORS — must be first, before all other middleware
   const allowedOrigins = [
     "http://localhost:5173",
     "http://localhost:3000",
@@ -46,11 +45,19 @@ async function startServer() {
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
-    if (req.method === "OPTIONS") {
-      res.sendStatus(204);
-      return;
-    }
     next();
+  });
+
+  // Handle OPTIONS preflight explicitly
+  app.options("*", (req, res) => {
+    const origin = req.headers.origin;
+    if (origin && allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+    res.sendStatus(204);
   });
 
   // Health check
